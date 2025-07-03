@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock Market Academy</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <div class="logo">Alpha Traders</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#register">Register</a></li>
+    </ul>
+  </nav>
+
+  <!-- <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>This Course Is Best For Beginners Or Those Who Have Already Experience In The Market. </h1>
+      <h2>Join our course and unlock your optimum potential.!</h2>
+      <div> <a href="passcode.html" class="btn">Get Access to Course</a></div>
+    </div>
+    
+   
+  </section> -->
+
+  <section id="register" class="register-section">
+    <h2>Student Enquiry</h2>
+    <form id="reg-form" style="display: block;">
+      <input type="text" name="name" placeholder="Your Full Name" required><br>
+      <input type="tel" name="phone" placeholder="WhatsApp Number" required><br>
+      <button type="submit">Register & Get QR</button>
+    </form>
+
+    <div id="qr-section" style="display: none; text-align: center;">
+      <h3>Step 2: Pay Now</h3>
+      <p>Scan the QR code below and pay ₹299</p>
+      <img src="qr.jpeg" alt="QR Code" width="220"><br>
+      <p>Once paid, we’ll send your access code via WhatsApp</p>
+      <button class="btn" style="margin-top: 1rem;" id="payment-done-btn">Payment Done</button>
+      <p id="thank-you-msg" style="display:none; margin-top: 1rem; color: green; font-weight: bold;">Thank you! We will share the passcode to access the course via WhatsApp shortly.</p>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById("reg-form");
+    const qrSection = document.getElementById("qr-section");
+    const paymentDoneBtn = document.getElementById("payment-done-btn");
+    const thankYouMsg = document.getElementById("thank-you-msg");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const name = form.elements["name"].value;
+      const phone = form.elements["phone"].value;
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("phone", phone);
+
+      fetch("submit.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          form.style.display = "none";
+          qrSection.style.display = "block";
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      })
+      .catch(error => {
+        alert("An error occurred. Please try again.");
+        console.error(error);
+      });
+    });
+
+    paymentDoneBtn.addEventListener("click", function() {
+      thankYouMsg.style.display = "block";
+    });
+  </script>
+</body>
+</html>
