@@ -1,19 +1,75 @@
-<?php
-include 'db.php';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Enquiry</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e0f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      color: #00796b;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #00796b;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Student Enquiry Form</h2>
+    <form id="whatsappForm">
+      <input type="text" id="name" placeholder="Full Name" required />
+      <input type="text" id="class" placeholder="Class (e.g. 10th, BCA)" required />
+      <input type="text" id="phone" placeholder="Phone Number" required />
+      <textarea id="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send on WhatsApp</button>
+    </form>
+  </div>
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $name = $conn->real_escape_string($_POST['name']);
-  $class = $conn->real_escape_string($_POST['class']);
-  $phone = $conn->real_escape_string($_POST['phone']);
-  $message = $conn->real_escape_string($_POST['message']);
+  <script>
+    document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+      e.preventDefault();
 
-  $sql = "INSERT INTO enquiries (name, class, phone, message) 
-          VALUES ('$name', '$class', '$phone', '$message')";
+      const name = document.getElementById("name").value.trim();
+      const studentClass = document.getElementById("class").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const message = document.getElementById("message").value.trim();
 
-  if ($conn->query($sql) === TRUE) {
-    echo "<script>alert('Enquiry submitted successfully!'); window.location.href='index.html';</script>";
-  } else {
-    echo "Error: " . $conn->error;
-  }
-}
-?>
+      const text = `New Student Enquiry:\n\nName: ${name}\nClass: ${studentClass}\nPhone: ${phone}\nMessage: ${message}`;
+      
+      const phoneNumber = "919999999999"; // ← Replace with your WhatsApp number
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+
+      window.open(url, '_blank');
+    });
+  </script>
+</body>
+</html>
