@@ -65,7 +65,7 @@
 
       const text = `New Student Enquiry:\n\nName: ${name}\nClass: ${studentClass}\nPhone: ${phone}\nMessage: ${message}`;
       
-      const phoneNumber = "919999999999"; // ← Replace with your WhatsApp number
+      const phoneNumber = "918853066278"; // ← Replace with your WhatsApp number
       const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
 
       window.open(url, '_blank');
